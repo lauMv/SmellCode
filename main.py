@@ -1,4 +1,8 @@
-import game
+from Game import Game
 
 if __name__ == "__main__":
-    game.game()
+    g = Game()
+    g.game()
+
+
+
