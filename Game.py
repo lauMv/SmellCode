@@ -10,6 +10,25 @@ class Game:
         for key in self.board.boxes:
             self.board_keys.append(key)
 
+    def is_winner(self):
+        if (self.board.boxes['1'] == self.board.boxes['2'] == self.board.boxes['3'] != ' ' or
+        self.board.boxes['4'] == self.board.boxes['5'] == self.board.boxes['6'] != ' ' or
+        self.board.boxes['7'] == self.board.boxes['8'] == self.board.boxes['9'] != ' ' or
+        self.board.boxes['1'] == self.board.boxes['4'] == self.board.boxes['7'] != ' ' or
+        self.board.boxes['2'] == self.board.boxes['5'] == self.board.boxes['8'] != ' ' or
+        self.board.boxes['3'] == self.board.boxes['6'] == self.board.boxes['9'] != ' ' or
+        self.board.boxes['3'] == self.board.boxes['5'] == self.board.boxes['7'] != ' ' or
+        self.board.boxes['1'] == self.board.boxes['5'] == self.board.boxes['9'] != ' '):
+            return 1
+        else:
+            return 0
+
+    def restart(self,restart):
+        if restart == "s" or restart == "S":
+            for key in self.board_keys:
+                self.board.boxes[key] = " "
+            self.game()
+
     def game(self):
         for i in range(10):
             self.board.show_board()
@@ -34,42 +53,7 @@ class Game:
                 continue
 
             if self.count >= 5:
-                if self.board.boxes['1'] == self.board.boxes['2'] == self.board.boxes['3'] != ' ':
-                    self.board.show_board()
-                    print("\nGame Over.\n")
-                    print(" Gano: " + self.turn)
-                    break
-                elif self.board.boxes['4'] == self.board.boxes['5'] == self.board.boxes['6'] != ' ':
-                    self.board.show_board()
-                    print("\nGame Over.\n")
-                    print(" Gano: " + self.turn)
-                    break
-                elif self.board.boxes['7'] == self.board.boxes['8'] == self.board.boxes['9'] != ' ':
-                    self.board.show_board()
-                    print("\nGame Over.\n")
-                    print(" Gano: " + self.turn)
-                    break
-                elif self.board.boxes['1'] == self.board.boxes['4'] == self.board.boxes['7'] != ' ':
-                    self.board.show_board()
-                    print("\nGame Over.\n")
-                    print(" Gano: " + self.turn)
-                    break
-                elif self.board.boxes['2'] == self.board.boxes['5'] == self.board.boxes['8'] != ' ':
-                    self.board.show_board()
-                    print("\nGame Over.\n")
-                    print(" Gano: " + self.turn)
-                    break
-                elif self.board.boxes['3'] == self.board.boxes['6'] == self.board.boxes['9'] != ' ':
-                    self.board.show_board()
-                    print("\nGame Over.\n")
-                    print(" Gano: " + self.turn)
-                    break
-                elif self.board.boxes['3'] == self.board.boxes['5'] == self.board.boxes['7'] != ' ':
-                    self.board.show_board()
-                    print("\nGame Over.\n")
-                    print(" Gano: " + self.turn)
-                    break
-                elif self.board.boxes['1'] == self.board.boxes['5'] == self.board.boxes['9'] != ' ':
+                if self.is_winner():
                     self.board.show_board()
                     print("\nGame Over.\n")
                     print(" Gano: " + self.turn)
@@ -86,7 +70,5 @@ class Game:
                 self.turn = 'X'
 
         restart = input("Jugar de nuevo?(s/n)")
-        if restart == "s" or restart == "S":
-            for key in self.board_keys:
-                self.board.boxes[key] = " "
-            self.game()
+        self.restart(restart)
+
